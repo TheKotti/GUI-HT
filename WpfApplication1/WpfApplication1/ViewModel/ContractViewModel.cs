@@ -9,6 +9,7 @@ using WpfApplication1.Model;
 
 namespace WpfApplication1.ViewModel
 {
+
     public class ContractViewModel
     {
         public ObservableCollection<Contract> Contracts
@@ -16,45 +17,80 @@ namespace WpfApplication1.ViewModel
             get;
             set;
         }
-        //public void LoadStudents()
-        //{
-        //    ObservableCollection<Student> students = new ObservableCollection<Student>();
-        //    //lisätään esimerkin vuoksi muutama opiskelija, oikeassa sovelluksessa tulisivat vaikka tietokannasta
-        //    students.Add(new Student { FirstName = "Kalle", LastName = "Jalkanen", AsioId = "1234543" });
-        //    students.Add(new Student { FirstName = "Teppo", LastName = "Testaaja", AsioId = "rewqwerewq" });
-        //    students.Add(new Student { FirstName = "Tomi", LastName = "Töttersätänst", AsioId = "fdsasdfdwsa" });
-        //    students.Add(new Student { FirstName = "Anni", LastName = "Anjolkainen", AsioId = "bvcdzxcv" });
-        //    Students = students;
-        //}
-        //metodi StudentViewModeliin jolla haetaan oppilastiedot mysql-palvemilta
-        public void LoadContractsFromMysql()
+        public ObservableCollection<Escalation> Escalations
         {
+            get;
+            set;
+        }
+        string sql;
+        public void LoadContractsFromMysql(string type)
+        {
+            
             try
             {
+                if (type == "System.Windows.Controls.Button: Contracts")
+                {
+                    sql = "SELECT ContractTitle, UserName, ContractLocation, ContractPC, ContractPS4, ContractX1, AVG(RatingScore) FROM Contracts INNER JOIN Users on Users.UserId = Contracts.UserId INNER JOIN Ratings ON Ratings.ContractId = Contracts.ContractId GROUP BY Contracts.ContractId";
+                } else if (type == "System.Windows.Controls.Button: Escalations")
+                {
+                    sql = "SELECT EscalationTitle, EscalationLocation, AVG(RatingScore) FROM Escalations LEFT OUTER JOIN EscalationRatings ON Escalations.EscalationId = EscalationRatings.EscalationId GROUP BY Escalations.EscalationId";
+                }
                 ObservableCollection<Contract> contracts = new ObservableCollection<Contract>();
+                ObservableCollection<Escalation> escalations = new ObservableCollection<Escalation>();
                 //luodaan yhteys labranetin mysql-palvelimelle
                 string connStr = GetMysqlConnectionString();
-                string sql = "SELECT ContractTitle, ContractLocation FROM Contracts";
-                using (MySqlConnection conn = new MySqlConnection(connStr))
-                {
+                    
+                    using (MySqlConnection conn = new MySqlConnection(connStr))
+                    {
                     conn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            WpfApplication1.Model.Contract s = new Model.Contract();
-                            s.ContractTitle = reader.GetString(0);
-                            s.ContractLocation = reader.GetString(1);
-                            contracts.Add(s);
+                            if (type == "System.Windows.Controls.Button: Contracts")
+                            {
+                                WpfApplication1.Model.Contract s = new Model.Contract();
+                                s.ContractTitle = reader.GetString(0);
+                                s.UserName = reader.GetString(1);
+                                s.ContractLocation = reader.GetString(2);
+                                s.ContractPC = reader.GetString(3);
+                                s.ContractPS4 = reader.GetString(4);
+                                s.ContractX1 = reader.GetString(5);
+                                s.AVGRating = reader.GetString(6);
+                                contracts.Add(s);
+                                Contracts = contracts;
+                            } else if (type == "System.Windows.Controls.Button: Escalations")
+                            {
+                                WpfApplication1.Model.Escalation e = new Model.Escalation();
+                                e.EscalationTitle = reader.GetString(0);
+                                e.EscalationLocation = reader.GetString(1);
+                                e.AVGRating = reader.GetString(2);
+                                escalations.Add(e);
+                                Escalations = escalations;
+
+                            }
                         }
-                        Contracts = contracts;
                     }
                 }
             }
             catch
             {
                 throw;
+            }
+        }
+
+        public void AddContractToDB(string title, string location)
+        {
+            string connStr = GetMysqlConnectionString();
+            string sql = string.Format("INSERT INTO Contracts (ContractTitle, ContractLocation, UserId, GameId) VALUES ('{0}', '{1}', 4, 6)", title, location);
+            
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                MySqlCommand insert = conn.CreateCommand();
+                insert.CommandText = sql;
+                conn.Open();
+                insert.ExecuteNonQuery();
             }
         }
         private string GetMysqlConnectionString()

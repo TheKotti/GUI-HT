@@ -24,24 +24,22 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
-            //kovakoodatut oppilaat
-            //svmo.LoadStudents();
-            //tietokannasta
-            try
-            {
-                svmo.LoadContractsFromMysql();
-            }
-            catch (Exception ex)
-            {
 
-                MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    svmo.LoadContractsFromMysql();
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
-        private void ContractViewControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            ContractViewControl.DataContext = svmo;
-        }
+        //private void ContractViewControl_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    ContractViewControl.DataContext = svmo;
+        //}
 
         private void dgContracts_Loaded(object sender, RoutedEventArgs e)
         {
@@ -55,8 +53,22 @@ namespace WpfApplication1
             uusi.ContractTitle = txtContractTitle.Text;
             uusi.ContractLocation = txtContractLocation.Text;
             svmo.Contracts.Add(uusi);
+            svmo.AddContractToDB(uusi.ContractTitle, uusi.ContractLocation);
             txtContractTitle.Text = "";
             txtContractLocation.Text = "";
+        }
+
+        private void btnShow_Click(object sender, RoutedEventArgs e)
+        {
+            txtContractTitle.Text = sender.ToString();
+            svmo.LoadContractsFromMysql(sender.ToString());
+            if (sender.ToString() == "System.Windows.Controls.Button: Contracts")
+            {
+                dgContracts.DataContext = svmo.Contracts;
+            } else if (sender.ToString() == "System.Windows.Controls.Button: Escalations")
+            {
+                dgContracts.DataContext = svmo.Escalations;
+            }
         }
     }
 }

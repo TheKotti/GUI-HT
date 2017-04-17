@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel HorizontalAlignment="Left">
-            <ItemsControl ItemsSource="{Binding Path=Students}">
+            <ItemsControl ItemsSource="{Binding Path=Contracts}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>

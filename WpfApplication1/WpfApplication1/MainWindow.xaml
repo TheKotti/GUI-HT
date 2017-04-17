@@ -6,16 +6,19 @@
         xmlns:local="clr-namespace:WpfApplication1"
         xmlns:views="clr-namespace:WpfApplication1.View"
         mc:Ignorable="d"
-        Title="MVVMDemo Contracts" SizeToContent="WidthAndHeight">
+        Title="MVVMDemo Contracts" Width="1000" Height="500">
     <Grid>
         <StackPanel Orientation="Horizontal" Background="LightCyan">
-            <views:ContractView x:Name="ContractViewControl" Loaded="ContractViewControl_Loaded" />
-            <DataGrid x:Name="dgContracts" ItemsSource="{Binding}" Loaded="dgContracts_Loaded" />
-            <StackPanel>
+            <!--<views:ContractView x:Name="ContractViewControl" Loaded="ContractViewControl_Loaded" />-->
+            <StackPanel Width="200">
                 <TextBox x:Name="txtContractTitle" Width="150" />
                 <TextBox x:Name="txtContractLocation" Width="150" />
                 <Button x:Name="btnAdd" Content="Lisää" Width="150" Click="btnAdd_Click"/>
+                <Button x:Name="btnShowContracts" Content="Contracts" Click="btnShow_Click"  />
+                <Button x:Name="btnShowEscs" Content="Escalations" Click="btnShow_Click" />
+                <Button x:Name="btnShowETs" Content="Elusives" Click="btnShow_Click"  />
             </StackPanel>
+            <DataGrid x:Name="dgContracts" ItemsSource="{Binding}" Loaded="dgContracts_Loaded" Width="783" ColumnWidth="*" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </Window>
