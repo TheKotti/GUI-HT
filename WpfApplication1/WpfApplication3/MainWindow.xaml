@@ -8,6 +8,12 @@
         Title="DBTool" Height="300" SizeToContent="Width">
     <Grid>
         <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Database">
+                    <MenuItem x:Name="menuDownload" Header="_Download backup" Click="menuDownload_Click"/>
+                    <MenuItem x:Name="menuRestore" Header="_Restore from backup" Click="menuRestore_Click"/>
+                </MenuItem>
+            </Menu>
             <StatusBar DockPanel.Dock="Bottom" Height="20">
                 <TextBlock x:Name="txtStatus" FontSize="12" Text="Ready"></TextBlock>
             </StatusBar>

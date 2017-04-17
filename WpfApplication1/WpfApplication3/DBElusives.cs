@@ -34,7 +34,6 @@ namespace JAMK.IT
                 throw;
             }
         }
-
         public static void UpdateETinDB(string connstring, int id, string title, string location, string fullname, DateTime newdate)
         {
             try
@@ -123,6 +122,45 @@ namespace JAMK.IT
             catch (Exception)
             {
                 throw;
+            }
+        }
+        public static void DownloadBackupofDB(string connstring)
+        {
+            // Important Additional Connection Options
+            connstring += "charset=utf8;convertzerodatetime=true;";
+
+            string file = AppDomain.CurrentDomain.BaseDirectory + "DB-Backup-" + DateTime.Now.ToString("dd-MM-yyyy") +  ".sql";
+            using (MySqlConnection conn = new MySqlConnection(connstring))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        conn.Open();
+                        mb.ExportToFile(file);
+                        conn.Close();
+                    }
+                }
+            }
+        }
+        public static void RestoreDBFromBackup(string connstring, string file)
+        {
+            // Important Additional Connection Options
+            connstring += "charset=utf8;convertzerodatetime=true;";
+
+            using (MySqlConnection conn = new MySqlConnection(connstring))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        conn.Open();
+                        mb.ImportFromFile(file);
+                        conn.Close();
+                    }
+                }
             }
         }
     }

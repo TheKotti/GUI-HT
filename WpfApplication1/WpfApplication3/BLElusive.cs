@@ -132,5 +132,29 @@ namespace JAMK.IT
                 throw;
             }
         }
+        public static void DownloadDB()
+        {
+            try
+            {
+                DBElusives.DownloadBackupofDB(connstring);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public static void RestoreDB(string filename)
+        {
+            try
+            {
+                DBElusives.RestoreDBFromBackup(connstring, filename);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

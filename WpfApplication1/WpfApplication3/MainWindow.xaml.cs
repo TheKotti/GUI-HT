@@ -119,5 +119,47 @@ namespace JAMK.IT
             addwindow.Owner = this;
             addwindow.ShowDialog();
         }
+
+        private void menuDownload_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ElusiveList.DownloadDB();
+                txtStatus.Text = "Database backup downloaded.";
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void menuRestore_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.Filter = "SQL|*.sql";
+                Nullable<bool> result = dlg.ShowDialog();
+                if (result == true)
+                {
+                    string filename = dlg.FileName;
+                    var confirm = MessageBox.Show(string.Format("Are you sure you want to restore database from {0}?", filename.Substring(filename.LastIndexOf('\\') + 1)), "Delete?", MessageBoxButton.YesNo);
+                    if (confirm == MessageBoxResult.Yes)
+                    {
+                        ElusiveList.RestoreDB(filename);
+                        List<Elusive> ets = ElusiveList.GetETs();
+                        dgElusives.DataContext = ets;
+                        txtStatus.Text = "Database restored from backup.";
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

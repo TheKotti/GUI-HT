@@ -25,7 +25,7 @@ namespace WpfApplication3.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;database=hitmandb;user=root;password=")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;database=hitmandb;user=root;password=;")]
         public string Connection {
             get {
                 return ((string)(this["Connection"]));
