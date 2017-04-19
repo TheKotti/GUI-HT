@@ -129,7 +129,7 @@ namespace JAMK.IT
             // Important Additional Connection Options
             connstring += "charset=utf8;convertzerodatetime=true;";
 
-            string file = AppDomain.CurrentDomain.BaseDirectory + "DB-Backup-" + DateTime.Now.ToString("dd-MM-yyyy") +  ".sql";
+            string file = AppDomain.CurrentDomain.BaseDirectory + "HitmanDB-Backup-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") +  ".sql";
             using (MySqlConnection conn = new MySqlConnection(connstring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())

@@ -72,7 +72,6 @@ namespace JAMK.IT
     public static class ElusiveList
     {
         private static string connstring = WpfApplication3.Properties.Settings.Default.Connection;
-        //metodi palauttaa kokoelman Book-olioita
         public static List<Elusive> GetTestETs()
         {
             List<Elusive> temp = new List<Elusive>();

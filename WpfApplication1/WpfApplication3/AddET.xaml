@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JAMK.IT"
         mc:Ignorable="d"
-        Title="Add Elusive Target" Height="200" Width="250">
+        Title="Add ET" Height="200" Width="250">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="80">

@@ -22,20 +22,36 @@ namespace JAMK.IT
     {
         public MainWindow()
         {
-            InitializeComponent();
-            IniMyStuff();
+            try
+            {
+                InitializeComponent();
+                IniMyStuff();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
         private void IniMyStuff()
         {
             //tänne kootusti omien kontrollien alustukset
-            List<string> locations = new List<string>();
-            locations.Add("The Showstopper");
-            locations.Add("World of Tomorrow");
-            locations.Add("A Gilded Cage");
-            locations.Add("Club 27");
-            locations.Add("Freedom Fighters");
-            locations.Add("Situs Inversus");
-            cmbLocation.ItemsSource = locations;
+            try
+            {
+                List<string> locations = new List<string>();
+                locations.Add("The Showstopper");
+                locations.Add("World of Tomorrow");
+                locations.Add("A Gilded Cage");
+                locations.Add("Club 27");
+                locations.Add("Freedom Fighters");
+                locations.Add("Situs Inversus");
+                cmbLocation.ItemsSource = locations;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
@@ -55,16 +71,18 @@ namespace JAMK.IT
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void dgElusives_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                //päivitetään datagridin sisältö
+                BindingExpression expression = txtTitle.GetBindingExpression(TextBox.TextProperty);
+                expression.UpdateSource();
+                expression = cmbLocation.GetBindingExpression(ComboBox.TextProperty);
+                expression.UpdateSource();
+                expression = txtFullName.GetBindingExpression(TextBox.TextProperty);
+                expression.UpdateSource();
+                //valitaan päivitetty rivi
                 Elusive current = (Elusive)dgElusives.SelectedItem;
                 int year = Int32.Parse(txtDate.Text.Substring(6, 4));
                 int month = Int32.Parse(txtDate.Text.Substring(3, 2));
@@ -109,15 +127,31 @@ namespace JAMK.IT
 
         private void dgElusives_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            btnDelete.IsEnabled = true;
-            btnUpdate.IsEnabled = true;
+            try
+            {
+                btnDelete.IsEnabled = true;
+                btnUpdate.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddET addwindow = new AddET();
-            addwindow.Owner = this;
-            addwindow.ShowDialog();
+            try
+            {
+                AddET addwindow = new AddET();
+                addwindow.Owner = this;
+                addwindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void menuDownload_Click(object sender, RoutedEventArgs e)
@@ -144,7 +178,7 @@ namespace JAMK.IT
                 if (result == true)
                 {
                     string filename = dlg.FileName;
-                    var confirm = MessageBox.Show(string.Format("Are you sure you want to restore database from {0}?", filename.Substring(filename.LastIndexOf('\\') + 1)), "Delete?", MessageBoxButton.YesNo);
+                    var confirm = MessageBox.Show(string.Format("Are you sure you want to restore database from {0}?", filename.Substring(filename.LastIndexOf('\\') + 1)), "Restore?", MessageBoxButton.YesNo);
                     if (confirm == MessageBoxResult.Yes)
                     {
                         ElusiveList.RestoreDB(filename);

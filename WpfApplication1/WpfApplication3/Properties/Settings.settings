@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Connection" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">server=localhost;database=hitmandb;user=root;password=;</Value>
+      <Value Profile="(Default)">server=mysql.labranet.jamk.fi;database=K8721_3;user=K8721;password=cMS0OUFIdmrxfnS9nRWoe3MTUpVSlrFA;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

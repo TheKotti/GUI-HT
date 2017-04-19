@@ -62,6 +62,8 @@ namespace JAMK.IT
                 mainwindow.txtStatus.Text = newET.Title + " added.";
                 List<Elusive> ets = ElusiveList.GetETs();
                 mainwindow.dgElusives.DataContext = ets;
+                mainwindow.btnDelete.IsEnabled = false;
+                mainwindow.btnUpdate.IsEnabled = false;
                 this.Close();
             }
             catch (Exception ex)
