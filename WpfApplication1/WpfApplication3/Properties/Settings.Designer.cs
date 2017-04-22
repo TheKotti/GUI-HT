@@ -25,8 +25,16 @@ namespace WpfApplication3.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=mysql.labranet.jamk.fi;database=K8721_3;user=K8721;password=cMS0OUFIdmrxfn" +
-            "S9nRWoe3MTUpVSlrFA;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=mysql.labranet.jamk.fi;database=K8721_3;user=K8721;password=;")]
+        public string Connectionjamk {
+            get {
+                return ((string)(this["Connectionjamk"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;database=hitmandb;user=root;password=;")]
         public string Connection {
             get {
                 return ((string)(this["Connection"]));

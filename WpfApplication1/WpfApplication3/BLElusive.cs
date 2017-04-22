@@ -84,7 +84,6 @@ namespace JAMK.IT
             DataTable dt;
             List<Elusive> temp = new List<Elusive>();
             dt = DBElusives.GetETsFromDB(connstring);
-            //ORM ?????
             Elusive et;
             foreach (DataRow dr in dt.Rows)
             {
@@ -97,11 +96,11 @@ namespace JAMK.IT
             }
             return temp;
         }
-        public static void UpdateET(Elusive et, DateTime newdate)
+        public static void UpdateET(Elusive et)
         {
             try
             {
-                JAMK.IT.DBElusives.UpdateETinDB(connstring, et.Id, et.Title, et.Location, et.FullName, newdate);
+                JAMK.IT.DBElusives.UpdateETinDB(connstring, et.Id, et.Title, et.Location, et.FullName, et.Date);
             }
             catch (Exception)
             {

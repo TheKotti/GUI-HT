@@ -35,6 +35,8 @@ namespace JAMK.IT
             locations.Add("Freedom Fighters");
             locations.Add("Situs Inversus");
             cmbLocation.ItemsSource = locations;
+            DateTime currentDate = DateTime.Today;
+            dpNewDate.SelectedDate = currentDate;
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -50,10 +52,7 @@ namespace JAMK.IT
                 newET.Title = txtNewTitle.Text;
                 newET.Location = cmbLocation.SelectedItem.ToString();
                 newET.FullName = txtNewFullName.Text;
-                int year = Int32.Parse(txtNewDate.Text.Substring(6, 4));
-                int month = Int32.Parse(txtNewDate.Text.Substring(3, 2));
-                int day = Int32.Parse(txtNewDate.Text.Substring(0, 2));
-                DateTime newdate = new DateTime(year, month, day);
+                DateTime newdate = (DateTime)dpNewDate.SelectedDate;
                 newET.Date = newdate;
                 //Lähetetään uusi olio eteenpäin
                 ElusiveList.AddET(newET);
